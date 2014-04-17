@@ -1,0 +1,21 @@
+#include<stdio.h>
+int s[1000005]={};
+long long int a[1000005]={};
+int main()
+{
+    int i,j,n;
+    for(i=2;i<=500003;i++)
+        for(j=i+i;j<=1000005;j=j+i)
+            s[j]=s[j]+i;
+    a[1]=0;
+    for(i=2;i<=1000000;i++)
+        a[i]=a[i-1]+s[i]+1;
+    int t;
+    scanf("%d",&t);
+    while(t--)
+    {
+        scanf("%d",&n);
+        printf("%lld\n",a[n]);
+    }
+    return 0;
+}

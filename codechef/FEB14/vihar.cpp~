@@ -1,0 +1,150 @@
+#include<bits/stdc++.h>
+ 
+using namespace std;
+ 
+typedef vector<int> vi;
+ 
+vi G[50001];
+
+
+        #define getchar getchar_unlocked
+        #define putchar putchar_unlocked
+
+int in()
+{
+        char c;
+        while(c=getchar(),(c<'0'||c>'9')&&(c!='-'));
+        bool flag=(c=='-');
+        if(flag) c=getchar();
+        int x=0;
+        while(c>='0'&&c<='9') {
+                x=x*10+c-48;
+                c=getchar();
+        }
+        return flag?-x:x;
+}
+ 
+int reach[50001];
+int W[50001];
+int saved[50001];
+int deg[50001];
+ 
+int n,cnt,one,final,tmp,flag;
+ 
+void dfs(int v);
+void dfs2(int v);
+long long int nc2(int n);
+ 
+int main()
+{
+    int m,i,j,k;
+    scanf("%d%d",&n,&m);
+ 
+    for(i=0;i<n;i++)
+	W[i]=in();
+ 
+    for(i=0;i<m;i++)
+    {
+	j=in();k=in();
+	(G[j-1]).push_back(k-1);
+	(G[k-1]).push_back(j-1);
+	deg[j-1]++;
+	deg[k-1]++;
+    }
+    long long int ans1=0;
+    int news=0;
+    for(i=0;i<n;i++)
+    {
+	one=-1;
+	if(!reach[i])
+	{
+	    cnt=0;
+	    dfs(i);
+	    saved[news++]=one;
+	    ans1=ans1+nc2(cnt);
+	}
+    }
+ 
+    for(i=0;i<=n;i++)
+	reach[i]=0;
+    int ans2=0;
+    flag=1;
+    for(i=0;i<news;i++)
+    {
+	final=0;
+	tmp=1;
+	if(saved[i]!=-1)
+	{
+	    dfs2(saved[i]);
+	    if(final>1)
+		ans2+=final;
+	}
+    }
+    printf("%Ld %d\n",ans1,ans2);
+    return 0;
+}
+ 
+void dfs(int v)
+{
+    int i;
+    if(!reach[v])
+    {
+	reach[v]=1;
+	if(W[v])
+	{
+	    one=v;
+	    cnt++;
+	}
+	for(i=0;i< (int)G[v].size();i++)
+	    if(!reach[G[v][i]])
+		dfs(G[v][i]);
+    }
+}
+ 
+void dfs2(int v)
+{
+    int i;
+    reach[v]=1;
+    if(W[v])
+    {
+	final+=tmp;
+	tmp=0;
+	flag=1;
+    }
+    else if(deg[v]==1)
+    {
+	flag=0;
+    }
+    for(i=0;i< (int)G[v].size();i++)
+    {
+	if(!reach[G[v][i]])
+	{
+	    tmp++;
+	    dfs2(G[v][i]);
+	    if(!flag && tmp>0) 
+		tmp--;
+	}
+    }
+    /*for(vector<int>::iterator it=G[v].begin();it!=G[v].end();it++)
+    {
+	if(!reach[*it])
+	{
+	    tmp++;
+	    dfs2(*it);
+	    if(!flag)
+		tmp--;
+	}
+    }*/
+    //for_each(G[v].begin(),G[v].end(),dfs2);
+}
+ 
+long long int nc2(int n)
+{
+    if(n<2)
+	return 0;
+    long long int N=(long long int)n;
+    long long int ret=N*(N-1)/2;
+    return ret;
+}
+ 
+

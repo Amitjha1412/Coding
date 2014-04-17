@@ -1,0 +1,48 @@
+#include<cstdio>
+#include<iostream>
+using namespace std;
+
+        #define getchar getchar_unlocked
+        #define putchar putchar_unlocked
+int in()
+{
+        char c;
+        while(c=getchar(),(c<'0'||c>'9')&&(c!='-'));
+        bool flag=(c=='-');
+        if(flag) c=getchar();
+        int x=0;
+        while(c>='0'&&c<='9') {
+                x=x*10+c-48;
+                c=getchar();
+        }
+        return flag?-x:x;
+}
+ 
+void out(int x)
+{
+        if(x<0) {
+                putchar('-');
+                x=-x;
+        }
+        int len=0,data[10];
+        while(x) {
+                data[len++]=x%10;
+                x/=10;
+        }
+        if(!len)
+        data[len++]=0;
+        while(len--) putchar(data[len]+48);
+        putchar('\n');
+}
+typedef struct element{
+    int x;
+    int index;
+}element;
+element a[100011];
+int main()
+{
+    int n;
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++)
+
+}

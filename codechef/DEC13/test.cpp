@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<iostream>
+
+using namespace std;
+char comp[100005];
+int rep[100005];
+int p[100005];
+int pref[100005];
+
+void longestPalin(char * seq, int * num,int k){
+    int c=0,r=0;
+    p[0]=0;
+    for(int i=1;i<=k;i++){
+        int i_mirror = 2*c-i;
+        p[i]=r>i?min(p[i_mirror],r-i):1;
+        while((seq[i+p[i]]==seq[i-p[i]]) && (num[i+p[i]]==num[i-p[i]])){
+            p[i]++;
+        }
+        if(i+p[i]>r){
+            r=i+p[i];c=i;
+        }
+    }
+}
+long long int incrementP(int k){
+    long long int ans =0;
+    for(int i=1;i<=k;i++){
+        int tot = 0;
+        if(comp[i+p[i]]==comp[i-p[i]])
+            tot=min(rep[i+p[i]],rep[i-p[i]]);
+        tot+=(pref[i+p[i]-1]-pref[i]);
+        ans+=1LL*tot + 1LL* rep[i]*(rep[i]+1)/2;
+    }
+    return ans;
+}
+void cal_pref(int k){
+    pref[0]=0;
+    for(int i=1;i<=k;i++)
+        pref[i]=pref[i-1]+rep[i];
+}
+int main(){
+    int t,k;
+    comp[0]='^';
+    rep[0]=0;
+    scanf("%d",&t);
+    while(t--){
+        scanf("%d%*c",&k);
+        int i;
+        for(i=1;i<=k;i++)
+            scanf("%c %d%*c",comp+i,rep+i);
+        comp[i++]='$';
+        comp[i]='\0';
+        rep[i]=0;
+        cal_pref(k);
+        longestPalin(comp,rep,k);
+        printf("%Ld\n",incrementP(k));
+
+    }
+    return 0;
+}
+

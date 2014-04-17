@@ -1,0 +1,131 @@
+#include<cstdio>
+#include<iostream>
+using namespace std;
+int main()
+{
+    int n,a=0,b=0,h1=0,m1=0,h2=0,m2=0,ah1=0,am1=0,ah2=0,am2=0;
+    scanf("%d",&n);
+    int t=0;
+    while(n--)
+    {
+        char s[10];
+        if(a>b)
+        {
+            if(m2>m1)
+            {
+                m1+=60;
+                h1=h1-1;
+            }
+            am1+=m1-m2;
+            if(am1>=60)
+            {
+                ah1+=1;
+                am1-=60;
+            }
+            ah1+=h1-h2;
+        }
+        if(b>a)
+        {
+            if(m2>m1)
+            {
+                m1+=60;
+                h1=h1-1;
+            }
+            am2+=m1-m2;
+            if(am2>=60)
+            {
+                ah2+=1;
+                am2-=60;
+            }
+            ah2+=h1-h2;
+        }
+        if(t==1)
+            a++;
+        else if(t==2)
+            b++;
+        h2=h1;
+        m2=m1;
+        scanf("%d",&t);
+        scanf("%s",s);
+        h1=s[1]-'0'+(s[0]-'0')*10;
+        m1=s[4]-'0'+(s[3]-'0')*10;
+    }
+    if(a>b )
+    {
+        if(m2>m1)
+        {
+            m1+=60;
+            h1=h1-1;
+        }
+        am1+=m1-m2;
+        if(am1>=60)
+        {
+            ah1+=1;
+            am1-=60;
+        }
+        ah1+=h1-h2;
+    }
+    if(b>a)
+    {
+        if(m2>m1)
+        {
+            m1+=60;
+            h1=h1-1;
+        }
+        am2+=m1-m2;
+        if(am2>=60)
+        {
+            ah2+=1;
+            am2-=60;
+        }
+        ah2+=h1-h2;
+    }
+    h2=h1;
+    m2=m1;
+    if(t==1)
+        a++;
+    else if(t==2)
+        b++;
+    if(a>b)
+    {
+        am1+=60-m2;
+        if(am1>=60)
+        {
+            ah1+=1;
+            am1-=60;
+        }
+        ah1+=47-h2;
+    }
+    if(b>a )
+    {
+        am2+=60-m2;
+        if(am2>=60)
+        {
+            ah2+=1;
+            am2-=60;
+        }
+        ah2+=47-h2;
+    }
+    if(am1<0)
+    {
+        am1+=60;
+        ah1--;
+    }
+    if(am2<0)
+    {
+        am2+=60;
+        am2--;
+    }
+    if(ah1<10)
+        cout<<'0';
+    cout<<ah1<<':';
+    if(am1<10)
+        cout<<'0';
+    cout<<am1<<endl;
+    if(ah2<10)
+        cout<<'0';
+    cout<<ah2<<':';
+    if(am2<10)
+        cout<<'0';
+    cout<<am2<<endl;
+}

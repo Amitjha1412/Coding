@@ -1,0 +1,100 @@
+import sys
+t=sys.stdin.readline()
+k=sys.stdin.readline()
+t=t[:-1]
+k=int(k)
+def exp(x,y):
+    n=1
+    while y:
+        if y%2==1:
+            n=n*x
+        y>>=1
+        x=x*x
+    return n
+def gcd(x,y):
+    while x:
+        x,y=y%x,x
+    return y
+def pcount(s):
+    sub=set()
+    n=len(s)
+    T=""
+    if(n==0):
+        T+= "^$"
+    else:
+        T +="^"
+        for i in s:
+            T +="#"+i
+        T +="#$"
+    n=len(T)
+    P=[]
+    C=R=0
+    for i in range(0,n-1):
+        i_mirror=2*C-i
+        if(R>i):
+            P.insert(i,min((R-i),P[i_mirror]))
+        else:
+            P.insert(i,0)
+        while(T[i+1+P[i]]==T[i-1-P[i]]):
+            x=P[i]
+            x=x+1
+            P.insert(i,x)
+        if((i+P[i])>R):
+            C=i
+            R=i+P[i]
+    for i in range(1,n-1):
+        x=P[i]
+        while(x>0):
+            j=i-1-x
+            j=j/2
+            sub.add(s[j:j+x])
+            x=x-2
+    return len(sub)
+n=pcount(t)
+print n
+ans=0
+for i in range(1,k+1):
+    ex=n
+    tk=k
+    ey=i
+    while tk:
+        tk,ey=ey%tk,tk
+    a=1
+    while ey:
+        if ey%2==1:
+            a=a*ex
+        ey>>=1
+        ex=ex*ex
+    ans+=a
+if(k%2==0):
+    x=k/2
+    ex=n
+    ey=x
+    a=1
+    while ey:
+        if ey%2==1:
+            a=a*ex
+        ey>>=1
+        ex=ex*ex
+    ex=n
+    ey=x+1
+    b=1
+    while ey:
+        if ey%2==1:
+            b=b*ex
+        ey>>=1
+        ex=ex*ex	
+    ans+=x*(a)
+    ans+=x*(b)
+else :
+    ex=n
+    ey=(k+1)/2
+    a=1
+    while ey:
+        if ey%2==1:
+            a=a*ex
+        ey>>=1
+        ex=ex*ex
+    ans+=k*(a)
+ans=ans/(2*k)
+print ans

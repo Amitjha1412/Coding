@@ -1,0 +1,32 @@
+#include<stdio.h>
+#define gc() getchar_unlocked()
+int isSpaceChar(char c) {
+    return c == ' ' || c == '\n' || c == '\r' ;
+}
+inline int FAST_IO()
+{
+    char ch;
+    int val=0;
+    ch=gc();
+    while(isSpaceChar(ch))
+        ch=gc();
+    val=0;
+    while(!isSpaceChar(ch))
+    {
+        val=(val*10)+(ch-'0');
+        ch=gc();
+    }
+    return val;
+}
+int main()
+{
+    int t;
+    scanf("%d",&t);
+    while(t--)
+    {
+        int n,k,start[100000]={0},end[100000]={0},a[100000];
+        scanf("%d %d",&n,&k);
+        for(i=0;i<n;i++)
+
+    }
+}
